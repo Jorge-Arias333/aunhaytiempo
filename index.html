@@ -1,40 +1,122 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡DESPIERTA!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #fffdf4;
+      --yellow: #ffe033;
+      --red: #e8182e;
+      --blue: #1a5fd4;
+      --cyan: #00c8d4;
+      --green: #4ecb71;
+      --purple: #c8b8f5;
+    }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    .screen {
+      position: fixed; inset: 0; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.12s;
+    }
+    .screen.active { opacity: 1; pointer-events: all; }
+
+    #vista1 { background: var(--yellow); }
+    #vista2 { background: var(--cyan); }
+    #vista3 { background: var(--green); }
+    #vista4 { background: var(--purple); }
+
+    .img-panel {
+      width: min(600px, 92vw);
+      height: min(420px, 65vh);
+      border: 5px solid var(--black);
+      box-shadow: 7px 7px 0 var(--black);
+      overflow: hidden;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+    .img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .choice-row { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 0.14em;
+      padding: 0.45em 2.2em;
+      border: 5px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .btn:hover  { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--black); }
+    .btn:active { transform: translate(4px,4px);   box-shadow: 2px 2px 0 var(--black); }
+
+    .btn-yellow { background: var(--yellow); color: var(--black); }
+    .btn-red    { background: var(--red);    color: var(--white); }
+    .btn-blue   { background: var(--blue);   color: var(--white); }
+    .btn-white  { background: var(--white);  color: var(--black); }
+  </style>
 </head>
 <body>
 
-    <div id="vista1">
-        <a href="#" onclick="mostrar('vista2')">DESPIERTA</a>
-    </div>
+<!-- VISTA 1 -->
+<div class="screen active" id="vista1">
+  <a class="btn btn-yellow" onclick="mostrar('vista2')">¡DESPIERTA! →</a>
+</div>
 
-    <div id="vista2" style="display:none;">
-        <img src="assets/imgprueb.jpeg" style="max-width:100%;">
-        <br>
-        <a href="#" onclick="mostrar('vista3')">🌅 LEVÁNTATE</a>
-        &nbsp;&nbsp;
-        <a href="#" onclick="mostrar('vista4')">😴 IGNORAR</a>
-    </div>
+<!-- VISTA 2 -->
+<div class="screen" id="vista2">
+  <div class="img-panel">
+    <img src="assets/imgprueb.jpeg" alt="Mañana" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-red"  onclick="mostrar('vista3')">🌅 ¡LEVÁNTATE!</a>
+    <a class="btn btn-blue" onclick="mostrar('vista4')">😴 IGNORAR</a>
+  </div>
+</div>
 
-    <div id="vista3" style="display:none;">
-        <img src="assets/levantate.jpeg" style="max-width:100%;">
-        <br>
-        <a href="#" onclick="mostrar('vista1')">⬅ Regresar</a>
-    </div>
+<!-- VISTA 3 -->
+<div class="screen" id="vista3">
+  <div class="img-panel">
+    <img src="assets/levantate.jpeg" alt="Levántate" onerror="this.style.display='none'">
+  </div>
+  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+</div>
 
-    <div id="vista4" style="display:none;">
-        <img src="assets/ignorar.jpeg" style="max-width:100%;">
-        <br>
-        <a href="#" onclick="mostrar('vista1')">⬅ Regresar</a>
-    </div>
+<!-- VISTA 4 -->
+<div class="screen" id="vista4">
+  <div class="img-panel">
+    <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
+  </div>
+  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+</div>
 
-    <script>
-        function mostrar(id) {
-            document.querySelectorAll('div').forEach(d => d.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
-        }
-    </script>
-
+<script>
+  function mostrar(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
 </body>
 </html>
+```
+
+Las imágenes ahora ocupan hasta `600px` de ancho y `65vh` de alto, aprovechando casi toda la pantalla y dejando justo el espacio para los botones debajo.
