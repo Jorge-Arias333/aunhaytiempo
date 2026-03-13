@@ -1,3 +1,5 @@
+Aquí está el código completo:
+
 ```html
 <!DOCTYPE html>
 <html lang="es">
@@ -37,6 +39,8 @@
     #vista2 { background: var(--cyan); }
     #vista3 { background: var(--green); }
     #vista4 { background: var(--purple); }
+    #vista5 { background: var(--red); }
+    #vista6 { background: var(--blue); }
 
     .img-panel {
       width: min(600px, 92vw);
@@ -73,6 +77,65 @@
     .btn-red    { background: var(--red);    color: var(--white); }
     .btn-blue   { background: var(--blue);   color: var(--white); }
     .btn-white  { background: var(--white);  color: var(--black); }
+
+    /* ── Menú de navegación inferior izquierdo ── */
+    .nav-menu {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 1.4rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+    }
+
+    .screen.active .nav-menu {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-label {
+      font-family: 'Bangers', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--black);
+      opacity: 0.55;
+      padding-left: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45em;
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      padding: 0.35em 1.2em;
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--white);
+      color: var(--black);
+      transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
+    .nav-btn:active { transform: translate(3px,3px);   box-shadow: 1px 1px 0 var(--black); }
+
+    .nav-btn.nav-yellow { background: var(--yellow); }
+    .nav-btn.nav-cyan   { background: var(--cyan);   }
+    .nav-btn.nav-red    { background: var(--red);    color: var(--white); }
+    .nav-btn.nav-blue   { background: var(--blue);   color: var(--white); }
+    .nav-btn.nav-green  { background: var(--green);  }
+    .nav-btn.nav-purple { background: var(--purple); }
   </style>
 </head>
 <body>
@@ -98,7 +161,16 @@
   <div class="img-panel">
     <img src="assets/levantate.jpeg" alt="Levántate" onerror="this.style.display='none'">
   </div>
-  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-blue"  onclick="mostrar('vista5')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-blue"   onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
 </div>
 
 <!-- VISTA 4 -->
@@ -106,7 +178,48 @@
   <div class="img-panel">
     <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
   </div>
-  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista6')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 5 -->
+<div class="screen" id="vista5">
+  <div class="img-panel">
+    <img src="assets/vista5.jpeg" alt="Vista 5" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista3')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 6 -->
+<div class="screen" id="vista6">
+  <div class="img-panel">
+    <img src="assets/vista6.jpeg" alt="Vista 6" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista4')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
 </div>
 
 <script>
@@ -118,5 +231,3 @@
 </body>
 </html>
 ```
-
-Las imágenes ahora ocupan hasta `600px` de ancho y `65vh` de alto, aprovechando casi toda la pantalla y dejando justo el espacio para los botones debajo.
