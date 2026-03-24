@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,6 +17,7 @@
       --cyan: #00c8d4;
       --green: #4ecb71;
       --purple: #c8b8f5;
+      --orange: #ff7c2a;
     }
 
     html, body { width: 100%; height: 100%; overflow: hidden; }
@@ -37,10 +37,12 @@
     #vista2 { background: var(--cyan); }
     #vista3 { background: var(--green); }
     #vista4 { background: var(--purple); }
+    #vista5 { background: var(--orange); }
+    #vista6 { background: var(--blue); }
 
     .img-panel {
       width: min(600px, 92vw);
-      height: min(420px, 65vh);
+      height: min(420px, 55vh);
       border: 5px solid var(--black);
       box-shadow: 7px 7px 0 var(--black);
       overflow: hidden;
@@ -73,12 +75,94 @@
     .btn-red    { background: var(--red);    color: var(--white); }
     .btn-blue   { background: var(--blue);   color: var(--white); }
     .btn-white  { background: var(--white);  color: var(--black); }
+    .btn-orange { background: var(--orange); color: var(--white); }
+
+    .uni-title {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(3rem, 10vw, 6rem);
+      letter-spacing: 0.1em;
+      color: var(--white);
+      text-shadow:
+        5px 5px 0 var(--black),
+        -3px -3px 0 var(--black),
+        3px -3px 0 var(--black),
+        -3px 3px 0 var(--black);
+      -webkit-text-stroke: 2px var(--black);
+      line-height: 1;
+      text-transform: uppercase;
+      animation: wobble 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes wobble {
+      from { transform: rotate(-2deg) scale(1); }
+      to   { transform: rotate(2deg) scale(1.04); }
+    }
+
+    .nav-menu {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 1.4rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+    }
+
+    .screen.active .nav-menu {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-label {
+      font-family: 'Bangers', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--black);
+      opacity: 0.55;
+      padding-left: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45em;
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      padding: 0.35em 1.2em;
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--white);
+      color: var(--black);
+      transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
+    .nav-btn:active { transform: translate(3px,3px);   box-shadow: 1px 1px 0 var(--black); }
+
+    .nav-btn.nav-yellow { background: var(--yellow); }
+    .nav-btn.nav-cyan   { background: var(--cyan);   }
+    .nav-btn.nav-red    { background: var(--red);    color: var(--white); }
+    .nav-btn.nav-blue   { background: var(--blue);   color: var(--white); }
+    .nav-btn.nav-green  { background: var(--green);  }
+    .nav-btn.nav-purple { background: var(--purple); }
+    .nav-btn.nav-orange { background: var(--orange); color: var(--white); }
   </style>
 </head>
 <body>
 
 <!-- VISTA 1 -->
 <div class="screen active" id="vista1">
+  <div class="uni-title" style="color: var(--black); font-size: clamp(3.5rem, 12vw, 7rem);">AÚN HAY TIEMPO</div>
   <a class="btn btn-yellow" onclick="mostrar('vista2')">¡DESPIERTA! →</a>
 </div>
 
@@ -98,7 +182,16 @@
   <div class="img-panel">
     <img src="assets/levantate.jpeg" alt="Levántate" onerror="this.style.display='none'">
   </div>
-  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
 </div>
 
 <!-- VISTA 4 -->
@@ -106,17 +199,244 @@
   <div class="img-panel">
     <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
   </div>
-  <a class="btn btn-white" onclick="mostrar('vista1')">← VOLVER</a>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 5 -->
+<div class="screen" id="vista5">
+  <div class="img-panel">
+    <img src="assets/uni.jpeg" alt="La Universidad" onerror="this.style.display='none'">
+  </div>
+  <div class="uni-title">¡Ay la Uni!</div>
+  <div class="choice-row">
+    <a class="btn btn-blue" onclick="mostrar('vista7', 'vista5')">🎒 IR A LA ESCUELA</a>
+    <a class="btn btn-red"  onclick="mostrar('vista6', 'vista5')">🛌 QUEDARSE</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
+</div>
+
+<!-- VISTA 6 — Quedarse -->
+<div class="screen" id="vista6" style="background:#e8182e;">
+  <div class="img-panel">
+    <img src="assets/quedar.jpeg" alt="Quedarse" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista5')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista7', 'vista6')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 7 -->
+<div class="screen" id="vista7" style="background:#9b59b6;">
+  <div class="img-panel">
+    <img src="assets/vista7.jpeg" alt="Vista 7" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="volverAtras()">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista8')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 8 -->
+<div class="screen" id="vista8" style="background:#2ecc71;">
+  <div class="img-panel">
+    <img src="assets/vista8.jpeg" alt="Vista 8" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista7')">← VOLVER</a>
+    <a class="btn btn-red"    onclick="mostrar('vista9')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 9 -->
+<div class="screen" id="vista9" style="background:#f39c12;">
+  <div class="img-panel">
+    <img src="assets/vista9.jpeg" alt="Vista 9" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista8')">← VOLVER</a>
+    <a class="btn btn-red"    onclick="mostrar('vista10')">🍽️ HORA DE COMER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 10 -->
+<div class="screen" id="vista10" style="background:#1abc9c;">
+  <div class="img-panel">
+    <img src="assets/vista10.jpeg" alt="Vista 10" onerror="this.style.display='none'">
+  </div>
+  <div class="uni-title" style="font-size: clamp(2.2rem, 8vw, 5rem); color: var(--white);">¡Hijole no me alcanza!</div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista9')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista11')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 11 -->
+<div class="screen" id="vista11" style="background:#8e44ad;">
+  <div class="img-panel">
+    <img src="assets/vista11.jpeg" alt="Vista 11" onerror="this.style.display='none'">
+  </div>
+  <div class="uni-title" style="font-size: clamp(1.4rem, 4vw, 2.8rem); color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
+    La quincena me duró 2 días,<br>ya ando viendo a quién le pido paro
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista10')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista12')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 12 -->
+<div class="screen" id="vista12" style="background:#c0392b;">
+  <div class="img-panel">
+    <img src="assets/vista12.jpeg" alt="Vista 12" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista11')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista13')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 13 -->
+<div class="screen" id="vista13" style="background:#2c3e50;">
+  <div class="img-panel">
+    <img src="assets/vista13.jpeg" alt="Vista 13" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista12')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista14')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 14 -->
+<div class="screen" id="vista14" style="background:#27ae60;">
+  <div class="img-panel">
+    <img src="assets/vista14.jpeg" alt="Vista 14" onerror="this.style.display='none'">
+  </div>
+  <div class="uni-title" style="font-size: clamp(1.8rem, 6vw, 4rem); color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
+    Con esto saco el extra
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista13')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista15')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 15 -->
+<div class="screen" id="vista15" style="background:#d35400;">
+  <div class="img-panel">
+    <img src="assets/vista15.jpeg" alt="Vista 15" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista14')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista16')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
+</div>
+
+<!-- VISTA 16 -->
+<div class="screen" id="vista16" style="background:#c0392b;">
+  <div class="img-panel">
+    <img src="assets/vista16.jpeg" alt="Vista 16" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista15')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">🎓 Ay la Uni!</a>
+  </nav>
 </div>
 
 <script>
-  function mostrar(id) {
+  let anteriorVista7 = 'vista5';
+
+  function mostrar(id, origen) {
+    if (id === 'vista7' && origen) {
+      anteriorVista7 = origen;
+    }
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
+  }
+
+  function volverAtras() {
+    mostrar(anteriorVista7);
   }
 </script>
 </body>
 </html>
-```
-
-Las imágenes ahora ocupan hasta `600px` de ancho y `65vh` de alto, aprovechando casi toda la pantalla y dejando justo el espacio para los botones debajo.
