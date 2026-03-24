@@ -1,0 +1,233 @@
+Aquí está el código completo:
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡DESPIERTA!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0d0d0d;
+      --white: #fffdf4;
+      --yellow: #ffe033;
+      --red: #e8182e;
+      --blue: #1a5fd4;
+      --cyan: #00c8d4;
+      --green: #4ecb71;
+      --purple: #c8b8f5;
+    }
+
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+
+    .screen {
+      position: fixed; inset: 0; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.12s;
+    }
+    .screen.active { opacity: 1; pointer-events: all; }
+
+    #vista1 { background: var(--yellow); }
+    #vista2 { background: var(--cyan); }
+    #vista3 { background: var(--green); }
+    #vista4 { background: var(--purple); }
+    #vista5 { background: var(--red); }
+    #vista6 { background: var(--blue); }
+
+    .img-panel {
+      width: min(600px, 92vw);
+      height: min(420px, 65vh);
+      border: 5px solid var(--black);
+      box-shadow: 7px 7px 0 var(--black);
+      overflow: hidden;
+      background: #ddd;
+      flex-shrink: 0;
+    }
+    .img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .choice-row { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 0.14em;
+      padding: 0.45em 2.2em;
+      border: 5px solid var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .btn:hover  { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--black); }
+    .btn:active { transform: translate(4px,4px);   box-shadow: 2px 2px 0 var(--black); }
+
+    .btn-yellow { background: var(--yellow); color: var(--black); }
+    .btn-red    { background: var(--red);    color: var(--white); }
+    .btn-blue   { background: var(--blue);   color: var(--white); }
+    .btn-white  { background: var(--white);  color: var(--black); }
+
+    /* ── Menú de navegación inferior izquierdo ── */
+    .nav-menu {
+      position: fixed;
+      bottom: 1.4rem;
+      left: 1.4rem;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+    }
+
+    .screen.active .nav-menu {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .nav-label {
+      font-family: 'Bangers', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--black);
+      opacity: 0.55;
+      padding-left: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45em;
+      font-family: 'Bangers', cursive;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      padding: 0.35em 1.2em;
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      background: var(--white);
+      color: var(--black);
+      transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .nav-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
+    .nav-btn:active { transform: translate(3px,3px);   box-shadow: 1px 1px 0 var(--black); }
+
+    .nav-btn.nav-yellow { background: var(--yellow); }
+    .nav-btn.nav-cyan   { background: var(--cyan);   }
+    .nav-btn.nav-red    { background: var(--red);    color: var(--white); }
+    .nav-btn.nav-blue   { background: var(--blue);   color: var(--white); }
+    .nav-btn.nav-green  { background: var(--green);  }
+    .nav-btn.nav-purple { background: var(--purple); }
+  </style>
+</head>
+<body>
+
+<!-- VISTA 1 -->
+<div class="screen active" id="vista1">
+  <a class="btn btn-yellow" onclick="mostrar('vista2')">¡DESPIERTA! →</a>
+</div>
+
+<!-- VISTA 2 -->
+<div class="screen" id="vista2">
+  <div class="img-panel">
+    <img src="assets/imgprueb.jpeg" alt="Mañana" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-red"  onclick="mostrar('vista3')">🌅 ¡LEVÁNTATE!</a>
+    <a class="btn btn-blue" onclick="mostrar('vista4')">😴 IGNORAR</a>
+  </div>
+</div>
+
+<!-- VISTA 3 -->
+<div class="screen" id="vista3">
+  <div class="img-panel">
+    <img src="assets/levantate.jpeg" alt="Levántate" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-blue"  onclick="mostrar('vista5')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-blue"   onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
+</div>
+
+<!-- VISTA 4 -->
+<div class="screen" id="vista4">
+  <div class="img-panel">
+    <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista6')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 5 -->
+<div class="screen" id="vista5">
+  <div class="img-panel">
+    <img src="assets/vista5.jpeg" alt="Vista 5" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista3')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 6 -->
+<div class="screen" id="vista6">
+  <div class="img-panel">
+    <img src="assets/vista6.jpeg" alt="Vista 6" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista4')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+  </nav>
+</div>
+
+<script>
+  function mostrar(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+</body>
+</html>
+```
