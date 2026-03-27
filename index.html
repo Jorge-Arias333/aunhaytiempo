@@ -37,7 +37,11 @@
     #vista2 { background: var(--cyan); }
     #vista3 { background: var(--green); }
     #vista4 { background: var(--purple); }
+
     #vista5 { background: var(--orange); }
+
+    #vista5 { background: var(--red); }
+
     #vista6 { background: var(--blue); }
 
     .img-panel {
@@ -98,6 +102,10 @@
       to   { transform: rotate(2deg) scale(1.04); }
     }
 
+
+
+    /* ── Menú de navegación inferior izquierdo ── */
+
     .nav-menu {
       position: fixed;
       bottom: 1.4rem;
@@ -155,7 +163,9 @@
     .nav-btn.nav-blue   { background: var(--blue);   color: var(--white); }
     .nav-btn.nav-green  { background: var(--green);  }
     .nav-btn.nav-purple { background: var(--purple); }
+
     .nav-btn.nav-orange { background: var(--orange); color: var(--white); }
+
   </style>
 </head>
 <body>
@@ -183,6 +193,7 @@
     <img src="assets/levantate.jpeg" alt="Levantate" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
+
     <a class="btn btn-white"  onclick="mostrar('vista2')">&#8592; VOLVER</a>
     <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE &#8594;</a>
   </div>
@@ -191,6 +202,16 @@
     <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
     <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
     <a class="nav-btn nav-purple" onclick="mostrar('vista4')">&#128564; Ignorar</a>
+
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-blue"  onclick="mostrar('vista5')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-blue"   onclick="mostrar('vista4')">😴 Ignorar</a>
+
   </nav>
 </div>
 
@@ -200,6 +221,7 @@
     <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
+
     <a class="btn btn-white"  onclick="mostrar('vista2')">&#8592; VOLVER</a>
     <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE &#8594;</a>
   </div>
@@ -208,12 +230,23 @@
     <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
     <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
     <a class="nav-btn nav-green"  onclick="mostrar('vista3')">&#127749; &#161;Lev&#225;ntate!</a>
+
+    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista6')">SIGUIENTE →</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+
   </nav>
 </div>
 
 <!-- VISTA 5 -->
 <div class="screen" id="vista5">
   <div class="img-panel">
+
     <img src="assets/uni.jpeg" alt="La Universidad" onerror="this.style.display='none'">
   </div>
   <div class="uni-title">&#161;Ay la Uni!</div>
@@ -420,6 +453,33 @@
     <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
     <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
     <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
+    <img src="assets/vista5.jpeg" alt="Vista 5" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista3')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
+  </nav>
+</div>
+
+<!-- VISTA 6 -->
+<div class="screen" id="vista6">
+  <div class="img-panel">
+    <img src="assets/vista6.jpeg" alt="Vista 6" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="mostrar('vista4')">← VOLVER</a>
+  </div>
+  <nav class="nav-menu">
+    <span class="nav-label">IR A</span>
+    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
+    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
+    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+
   </nav>
 </div>
 
@@ -441,4 +501,7 @@
   }
 </script>
 </body>
+
+</html>
+
 </html>
