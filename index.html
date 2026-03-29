@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>&#161;DESPIERTA!</title>
+  <title>¡DESPIERTA!</title>
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,490 +19,519 @@
       --green: #4ecb71;
       --purple: #c8b8f5;
       --orange: #ff7c2a;
+      --nav-h: 52px;
     }
 
-    html, body { width: 100%; height: 100%; overflow: hidden; }
+    html, body { width: 100%; height: 100%; overflow: hidden; -webkit-text-size-adjust: 100%; }
 
+    /* ── TOP NAV ── */
+    .top-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: var(--black); border-bottom: 4px solid var(--yellow);
+      display: flex; align-items: center; gap: 0.35rem; padding: 0.4rem 0.7rem;
+      overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
+      -ms-overflow-style: none; flex-wrap: nowrap; white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+    .top-nav::-webkit-scrollbar { display: none; }
+
+    .top-nav-label {
+      font-family: 'Bangers', cursive; font-size: 0.72rem; letter-spacing: 0.18em;
+      color: var(--yellow); opacity: 0.7; text-transform: uppercase;
+      padding-right: 0.3rem; flex-shrink: 0;
+      border-right: 2px solid rgba(255,224,51,0.3); margin-right: 0.15rem;
+      align-self: stretch; display: flex; align-items: center;
+    }
+
+    .tnav-btn {
+      display: inline-flex; align-items: center; font-family: 'Bangers', cursive;
+      font-size: clamp(0.75rem, 2.5vw, 0.95rem); letter-spacing: 0.08em;
+      padding: 0.25em 0.7em; border: 2px solid var(--black);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.5); border-radius: 4px; cursor: pointer;
+      text-decoration: none; color: var(--black); background: var(--white);
+      transition: transform 0.08s, box-shadow 0.08s; user-select: none;
+      white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent;
+    }
+    .tnav-btn:active { transform: translate(2px,2px); box-shadow: 0px 0px 0 rgba(0,0,0,0.5); }
+
+    .tnav-yellow { background: var(--yellow); }
+    .tnav-cyan   { background: var(--cyan); }
+    .tnav-red    { background: var(--red); color: var(--white); }
+    .tnav-blue   { background: var(--blue); color: var(--white); }
+    .tnav-green  { background: var(--green); }
+    .tnav-purple { background: var(--purple); }
+    .tnav-orange { background: var(--orange); color: var(--white); }
+    .tnav-dark   { background: #2c3e50; color: var(--white); }
+    .tnav-teal   { background: #16a085; color: var(--white); }
+
+    /* ── SCREENS ── */
     .screen {
-      position: fixed; inset: 0; z-index: 1;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1.2rem;
-      padding: 1.5rem;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.12s;
+      position: fixed; inset: 0; padding-top: var(--nav-h); z-index: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: clamp(0.6rem, 2vw, 1.2rem);
+      padding-left: clamp(0.8rem, 3vw, 1.5rem);
+      padding-right: clamp(0.8rem, 3vw, 1.5rem);
+      padding-bottom: clamp(0.8rem, 2vw, 1.5rem);
+      opacity: 0; pointer-events: none; transition: opacity 0.12s;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
     }
     .screen.active { opacity: 1; pointer-events: all; }
 
-    #vista1 { background: var(--yellow); }
-    #vista2 { background: var(--cyan); }
-    #vista3 { background: var(--green); }
-    #vista4 { background: var(--purple); }
-
-    #vista5 { background: var(--orange); }
-
-    #vista5 { background: var(--red); }
-
-    #vista6 { background: var(--blue); }
-
     .img-panel {
-      width: min(600px, 92vw);
-      height: min(420px, 55vh);
-      border: 5px solid var(--black);
-      box-shadow: 7px 7px 0 var(--black);
-      overflow: hidden;
-      background: #ddd;
-      flex-shrink: 0;
+      width: min(900px, 96vw); height: clamp(160px, 45vw, 520px);
+      border: 4px solid var(--black); box-shadow: 6px 6px 0 var(--black);
+      overflow: hidden; background: #ddd; flex-shrink: 0; border-radius: 4px;
     }
-    .img-panel img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-panel img, .img-panel video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .choice-row { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+    .choice-row { display: flex; gap: clamp(0.5rem, 2vw, 1.2rem); flex-wrap: wrap; justify-content: center; width: 100%; }
 
     .btn {
-      display: inline-block;
-      font-family: 'Bangers', cursive;
-      font-size: 1.6rem;
-      letter-spacing: 0.14em;
-      padding: 0.45em 2.2em;
-      border: 5px solid var(--black);
-      box-shadow: 6px 6px 0 var(--black);
-      border-radius: 4px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.08s, box-shadow 0.08s;
-      user-select: none;
-      white-space: nowrap;
+      display: inline-block; font-family: 'Bangers', cursive;
+      font-size: clamp(1rem, 3.5vw, 1.6rem); letter-spacing: 0.12em;
+      padding: 0.4em clamp(1rem, 4vw, 2.2em); border: 4px solid var(--black);
+      box-shadow: 5px 5px 0 var(--black); border-radius: 4px; cursor: pointer;
+      text-decoration: none; transition: transform 0.08s, box-shadow 0.08s;
+      user-select: none; white-space: nowrap; -webkit-tap-highlight-color: transparent;
     }
-    .btn:hover  { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--black); }
-    .btn:active { transform: translate(4px,4px);   box-shadow: 2px 2px 0 var(--black); }
+    .btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--black); }
 
     .btn-yellow { background: var(--yellow); color: var(--black); }
     .btn-red    { background: var(--red);    color: var(--white); }
     .btn-blue   { background: var(--blue);   color: var(--white); }
     .btn-white  { background: var(--white);  color: var(--black); }
     .btn-orange { background: var(--orange); color: var(--white); }
+    .btn-green  { background: var(--green);  color: var(--black); }
+    .btn-cyan   { background: var(--cyan);   color: var(--black); }
 
     .uni-title {
-      font-family: 'Bangers', cursive;
-      font-size: clamp(3rem, 10vw, 6rem);
-      letter-spacing: 0.1em;
-      color: var(--white);
-      text-shadow:
-        5px 5px 0 var(--black),
-        -3px -3px 0 var(--black),
-        3px -3px 0 var(--black),
-        -3px 3px 0 var(--black);
-      -webkit-text-stroke: 2px var(--black);
-      line-height: 1;
-      text-transform: uppercase;
-      animation: wobble 1.2s ease-in-out infinite alternate;
+      font-family: 'Bangers', cursive; font-size: clamp(2rem, 8vw, 6rem);
+      letter-spacing: 0.1em; color: var(--white);
+      text-shadow: 4px 4px 0 var(--black), -2px -2px 0 var(--black), 2px -2px 0 var(--black), -2px 2px 0 var(--black);
+      -webkit-text-stroke: 1.5px var(--black); line-height: 1; text-transform: uppercase;
+      animation: wobble 1.2s ease-in-out infinite alternate; text-align: center;
     }
-
     @keyframes wobble {
       from { transform: rotate(-2deg) scale(1); }
       to   { transform: rotate(2deg) scale(1.04); }
     }
 
-
-
-    /* ── Menú de navegación inferior izquierdo ── */
-
-    .nav-menu {
+    /* ── FLOATING BUTTONS ── */
+    .float-btns {
       position: fixed;
-      bottom: 1.4rem;
-      left: 1.4rem;
-      z-index: 100;
+      bottom: clamp(0.8rem, 3vw, 1.4rem);
+      right: clamp(0.8rem, 3vw, 1.4rem);
+      z-index: 300;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
       gap: 0.5rem;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.12s;
+      align-items: flex-end;
     }
 
-    .screen.active .nav-menu {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .nav-label {
+    .float-btn {
       font-family: 'Bangers', cursive;
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      color: var(--black);
-      opacity: 0.55;
-      padding-left: 3px;
-      text-transform: uppercase;
-    }
-
-    .nav-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45em;
-      font-family: 'Bangers', cursive;
-      font-size: 1.15rem;
+      font-size: clamp(0.85rem, 2.5vw, 1.05rem);
       letter-spacing: 0.12em;
-      padding: 0.35em 1.2em;
+      padding: 0.4em 1.1em;
       border: 3px solid var(--black);
       box-shadow: 4px 4px 0 var(--black);
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
       text-decoration: none;
-      background: var(--white);
-      color: var(--black);
-      transition: transform 0.08s, box-shadow 0.08s;
       user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.08s, box-shadow 0.08s;
       white-space: nowrap;
     }
-    .nav-btn:hover  { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
-    .nav-btn:active { transform: translate(3px,3px);   box-shadow: 1px 1px 0 var(--black); }
+    .float-btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--black); }
+    .float-historia    { background: var(--yellow); color: var(--black); }
+    .float-devs        { background: #2c3e50;       color: var(--white); }
 
-    .nav-btn.nav-yellow { background: var(--yellow); }
-    .nav-btn.nav-cyan   { background: var(--cyan);   }
-    .nav-btn.nav-red    { background: var(--red);    color: var(--white); }
-    .nav-btn.nav-blue   { background: var(--blue);   color: var(--white); }
-    .nav-btn.nav-green  { background: var(--green);  }
-    .nav-btn.nav-purple { background: var(--purple); }
+    /* ── STORY BOX (vista 22) ── */
+    .story-box {
+      width: min(820px, 94vw); background: var(--white);
+      border: 4px solid var(--black); box-shadow: 7px 7px 0 var(--black);
+      border-radius: 6px; padding: clamp(1rem, 4vw, 2rem) clamp(1.1rem, 4vw, 2.4rem);
+      overflow-y: auto; max-height: calc(100dvh - 180px); flex-shrink: 1;
+    }
+    .story-box p {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(0.9rem, 2.2vw, 1.15rem);
+      line-height: 1.85; color: var(--black); text-align: justify;
+    }
+    .story-box p + p { margin-top: 1rem; }
 
-    .nav-btn.nav-orange { background: var(--orange); color: var(--white); }
+    /* ── DEVS BOX (vista 23) ── */
+    .devs-box {
+      width: min(560px, 92vw); background: var(--white);
+      border: 5px solid var(--black); box-shadow: 8px 8px 0 var(--black);
+      border-radius: 6px; padding: clamp(1.4rem, 5vw, 2.6rem) clamp(1.4rem, 5vw, 2.8rem);
+      display: flex; flex-direction: column; gap: 1.2rem; align-items: center;
+    }
+    .devs-title {
+      font-family: 'Bangers', cursive; font-size: clamp(1.6rem, 5vw, 2.6rem);
+      letter-spacing: 0.14em; color: var(--black); text-align: center;
+      text-transform: uppercase;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+    }
+    .devs-list {
+      list-style: none; width: 100%;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .devs-list li {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(1rem, 2.8vw, 1.25rem);
+      color: var(--black); text-align: center;
+      padding: 0.55em 1em;
+      border: 3px solid var(--black);
+      border-radius: 4px;
+      box-shadow: 4px 4px 0 var(--black);
+      background: var(--yellow);
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
 
+    @media (max-width: 480px) {
+      :root { --nav-h: 46px; }
+      .img-panel { height: clamp(140px, 48vw, 260px); border-width: 3px; box-shadow: 4px 4px 0 var(--black); }
+      .btn { border-width: 3px; box-shadow: 3px 3px 0 var(--black); }
+      .story-box { border-width: 3px; box-shadow: 4px 4px 0 var(--black); }
+      .uni-title { font-size: clamp(1.6rem, 9vw, 3rem); }
+      .float-btn { font-size: 0.8rem; padding: 0.35em 0.85em; border-width: 2px; box-shadow: 3px 3px 0 var(--black); }
+    }
+    @media (max-width: 360px) {
+      .choice-row { gap: 0.4rem; }
+      .btn { padding: 0.35em 0.9em; }
+    }
   </style>
 </head>
 <body>
 
+<!-- ══════════ TOP NAV ══════════ -->
+<nav class="top-nav">
+  <span class="top-nav-label">IR A</span>
+  <a class="tnav-btn tnav-yellow" onclick="mostrar('vista1'); detenerSonido()">1</a>
+  <a class="tnav-btn tnav-cyan"   onclick="mostrar('vista2'); detenerSonido()">2</a>
+  <a class="tnav-btn tnav-green"  onclick="mostrar('vista3'); detenerSonido()">3</a>
+  <a class="tnav-btn tnav-purple" onclick="mostrar('vista4'); detenerSonido()">4</a>
+  <a class="tnav-btn tnav-orange" onclick="mostrar('vista5'); detenerSonido()">5</a>
+  <a class="tnav-btn tnav-red"    onclick="mostrar('vista6'); detenerSonido()">6</a>
+  <a class="tnav-btn" onclick="mostrar('vista7'); detenerSonido()" style="background:#9b59b6;color:var(--white);">7</a>
+  <a class="tnav-btn" onclick="mostrar('vista8'); detenerSonido()" style="background:#2ecc71;">8</a>
+  <a class="tnav-btn" onclick="mostrar('vista9'); detenerSonido()" style="background:#f39c12;">9</a>
+  <a class="tnav-btn tnav-teal"   onclick="mostrar('vista10'); detenerSonido()">10</a>
+  <a class="tnav-btn" onclick="mostrar('vista11'); detenerSonido()" style="background:#8e44ad;color:var(--white);">11</a>
+  <a class="tnav-btn tnav-red"    onclick="mostrar('vista12'); detenerSonido()">12</a>
+  <a class="tnav-btn tnav-green"  onclick="mostrar('vista13'); detenerSonido()">13</a>
+  <a class="tnav-btn tnav-orange" onclick="mostrar('vista15'); detenerSonido()">14</a>
+  <a class="tnav-btn tnav-red"    onclick="mostrar('vista16'); tocarSonido()">15</a>
+  <a class="tnav-btn tnav-teal"   onclick="mostrar('vista17'); detenerSonido()">16</a>
+  <a class="tnav-btn tnav-blue"   onclick="mostrar('vista18'); detenerSonido()">17</a>
+  <a class="tnav-btn" onclick="mostrar('vista19'); detenerSonido()" style="background:#8e44ad;color:var(--white);">18</a>
+  <a class="tnav-btn tnav-yellow" onclick="mostrar('vista20'); detenerSonido()">19</a>
+  <a class="tnav-btn tnav-dark"   onclick="mostrar('vista21'); detenerSonido()">20</a>
+</nav>
+
+<!-- ══════════ FLOATING BUTTONS ══════════ -->
+<div class="float-btns">
+  <a class="float-btn float-historia" onclick="mostrar('vista22'); detenerSonido()">📖 HISTORIA</a>
+  <a class="float-btn float-devs"     onclick="mostrar('vista23'); detenerSonido()">👥 DESARROLLADORES</a>
+</div>
+
 <!-- VISTA 1 -->
-<div class="screen active" id="vista1">
-  <div class="uni-title" style="color: var(--black); font-size: clamp(3.5rem, 12vw, 7rem);">A&#218;N HAY TIEMPO</div>
-  <a class="btn btn-yellow" onclick="mostrar('vista2')">&#161;DESPIERTA! &#8594;</a>
+<div class="screen active" id="vista1" style="background: var(--yellow);">
+  <div class="uni-title" style="color: var(--black);">AÚN HAY TIEMPO</div>
+  <a class="btn btn-yellow" onclick="mostrar('vista2')">¡DESPIERTA! →</a>
 </div>
 
 <!-- VISTA 2 -->
-<div class="screen" id="vista2">
+<div class="screen" id="vista2" style="background: var(--cyan);">
   <div class="img-panel">
-    <img src="assets/imgprueb.jpeg" alt="Manana" onerror="this.style.display='none'">
+    <img src="assets/vista1.png" alt="Mañana" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-red"  onclick="mostrar('vista3')">&#127749; &#161;LEVI&#193;NTATE!</a>
-    <a class="btn btn-blue" onclick="mostrar('vista4')">&#128564; IGNORAR</a>
+    <a class="btn btn-red"  onclick="mostrar('vista3')">🌅 ¡LEVÁNTATE!</a>
+    <a class="btn btn-blue" onclick="mostrar('vista4')">😴 IGNORAR</a>
   </div>
 </div>
 
 <!-- VISTA 3 -->
-<div class="screen" id="vista3">
+<div class="screen" id="vista3" style="background: var(--green);">
   <div class="img-panel">
     <img src="assets/levantate.jpeg" alt="Levantate" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-
-    <a class="btn btn-white"  onclick="mostrar('vista2')">&#8592; VOLVER</a>
-    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">&#128564; Ignorar</a>
-
-    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
-    <a class="btn btn-blue"  onclick="mostrar('vista5')">SIGUIENTE →</a>
-  </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
-    <a class="nav-btn nav-blue"   onclick="mostrar('vista4')">😴 Ignorar</a>
-
-  </nav>
 </div>
 
 <!-- VISTA 4 -->
-<div class="screen" id="vista4">
+<div class="screen" id="vista4" style="background: var(--purple);">
   <div class="img-panel">
     <img src="assets/ignorar.jpeg" alt="Ignorar" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-
-    <a class="btn btn-white"  onclick="mostrar('vista2')">&#8592; VOLVER</a>
-    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista2')">← VOLVER</a>
+    <a class="btn btn-orange" onclick="mostrar('vista5')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">&#127749; &#161;Lev&#225;ntate!</a>
-
-    <a class="btn btn-white" onclick="mostrar('vista2')">← VOLVER</a>
-    <a class="btn btn-red"   onclick="mostrar('vista6')">SIGUIENTE →</a>
-  </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
-    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
-
-  </nav>
 </div>
 
 <!-- VISTA 5 -->
-<div class="screen" id="vista5">
+<div class="screen" id="vista5" style="background: var(--orange);">
   <div class="img-panel">
-
     <img src="assets/uni.jpeg" alt="La Universidad" onerror="this.style.display='none'">
   </div>
-  <div class="uni-title">&#161;Ay la Uni!</div>
+  <div class="uni-title">¡Ay la Uni!</div>
   <div class="choice-row">
-    <a class="btn btn-blue" onclick="mostrar('vista7', 'vista5')">&#127872; IR A LA ESCUELA</a>
-    <a class="btn btn-red"  onclick="mostrar('vista6', 'vista5')">&#128716; QUEDARSE</a>
+    <a class="btn btn-blue" onclick="mostrar('vista7', 'vista5')">🎒 IR A LA ESCUELA</a>
+    <a class="btn btn-red"  onclick="mostrar('vista6', 'vista5')">🛌 QUEDARSE</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">&#127749; &#161;Lev&#225;ntate!</a>
-    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">&#128564; Ignorar</a>
-  </nav>
 </div>
 
-<!-- VISTA 6 - Quedarse -->
-<div class="screen" id="vista6" style="background:#e8182e;">
+<!-- VISTA 6 -->
+<div class="screen" id="vista6" style="background: #e8182e;">
   <div class="img-panel">
-    <img src="assets/quedar.jpeg" alt="Quedarse" onerror="this.style.display='none'">
+    <img src="assets/hambre.jpg" alt="Quedarse" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista5')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista7', 'vista6')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista5')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista7', 'vista6')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 7 -->
-<div class="screen" id="vista7" style="background:#9b59b6;">
+<div class="screen" id="vista7" style="background: #9b59b6;">
   <div class="img-panel">
     <img src="assets/vista7.jpeg" alt="Vista 7" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="volverAtras()">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista8')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="volverAtras()">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista8')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 8 -->
-<div class="screen" id="vista8" style="background:#2ecc71;">
+<div class="screen" id="vista8" style="background: #2ecc71;">
   <div class="img-panel">
-    <img src="assets/vista8.jpeg" alt="Vista 8" onerror="this.style.display='none'">
+    <img src="assets/noclase.png" alt="Vista 8" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista7')">&#8592; VOLVER</a>
-    <a class="btn btn-red"    onclick="mostrar('vista9')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white" onclick="mostrar('vista7')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista9')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 9 -->
-<div class="screen" id="vista9" style="background:#f39c12;">
+<div class="screen" id="vista9" style="background: #f39c12;">
   <div class="img-panel">
-    <img src="assets/vista9.jpeg" alt="Vista 9" onerror="this.style.display='none'">
+    <img src="assets/SALON1.jpg" alt="Vista 9" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista8')">&#8592; VOLVER</a>
-    <a class="btn btn-red"    onclick="mostrar('vista10')">&#127869; HORA DE COMER</a>
+    <a class="btn btn-white" onclick="mostrar('vista8')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista10')">🍽️ HORA DE COMER</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 10 -->
-<div class="screen" id="vista10" style="background:#1abc9c;">
+<div class="screen" id="vista10" style="background: #1abc9c;">
   <div class="img-panel">
     <img src="assets/vista10.jpeg" alt="Vista 10" onerror="this.style.display='none'">
   </div>
-  <div class="uni-title" style="font-size: clamp(2.2rem, 8vw, 5rem); color: var(--white);">&#161;Hijole no me alcanza!</div>
+  <div class="uni-title" style="color: var(--white);">¡Hijole no me alcanza!</div>
   <div class="choice-row">
-    <a class="btn btn-white" onclick="mostrar('vista9')">&#8592; VOLVER</a>
-    <a class="btn btn-red"   onclick="mostrar('vista11')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white" onclick="mostrar('vista9')">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista11')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 11 -->
-<div class="screen" id="vista11" style="background:#8e44ad;">
+<div class="screen" id="vista11" style="background: #8e44ad;">
   <div class="img-panel">
-    <img src="assets/vista11.jpeg" alt="Vista 11" onerror="this.style.display='none'">
+    <img src="assets/transporte2.jpeg" alt="Vista 11" onerror="this.style.display='none'">
   </div>
-  <div class="uni-title" style="font-size: clamp(1.4rem, 4vw, 2.8rem); color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
-    La quincena me dur&#243; 2 d&#237;as,<br>ya ando viendo a qui&#233;n le pido paro
+  <div class="uni-title" style="color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
+    La quincena me duró 2 días,<br>ya ando viendo a quién le pido paro
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista10')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista12')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista10')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista12')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
-<!-- VISTA 12 - panel mas alto para imagen vertical -->
-<div class="screen" id="vista12" style="background:#c0392b;">
-  <div class="img-panel" style="height: min(650px, 78vh);">
-    <img src="assets/vista12.jpeg" alt="Vista 12" onerror="this.style.display='none'">
+<!-- VISTA 12 -->
+<div class="screen" id="vista12" style="background: #c0392b;">
+  <div class="img-panel">
+    <img src="assets/vista12.jpg" alt="Vista 12" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista11')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista13')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista11')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista13')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 13 -->
-<div class="screen" id="vista13" style="background:#2c3e50;">
+<div class="screen" id="vista13" style="background: #27ae60;">
   <div class="img-panel">
-    <img src="assets/vista13.jpeg" alt="Vista 13" onerror="this.style.display='none'">
+    <img src="assets/PROYECTOFINAL.png" alt="Vista 13" onerror="this.style.display='none'">
   </div>
-  <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista12')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista14')">SIGUIENTE &#8594;</a>
-  </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
-</div>
-
-<!-- VISTA 14 -->
-<div class="screen" id="vista14" style="background:#27ae60;">
-  <div class="img-panel">
-    <img src="assets/vista14.jpeg" alt="Vista 14" onerror="this.style.display='none'">
-  </div>
-  <div class="uni-title" style="font-size: clamp(1.8rem, 6vw, 4rem); color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
+  <div class="uni-title" style="color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
     Con esto saco el extra
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista13')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista15')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white"  onclick="mostrar('vista12')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista15')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
+</div>
+
+<!-- VISTA 14 -->
+<div class="screen" id="vista15" style="background: #d35400;">
+  <div class="img-panel">
+    <img src="assets/MIMIDO2.jpg" alt="Vista 14" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista13')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista16')">SIGUIENTE →</a>
+  </div>
 </div>
 
 <!-- VISTA 15 -->
-<div class="screen" id="vista15" style="background:#d35400;">
+<div class="screen" id="vista16" style="background: #c0392b;">
   <div class="img-panel">
-    <img src="assets/vista15.jpeg" alt="Vista 15" onerror="this.style.display='none'">
+    <video id="videoFinal" src="assets/campana.mp4" autoplay loop muted playsinline></video>
   </div>
   <div class="choice-row">
-    <a class="btn btn-white"  onclick="mostrar('vista14')">&#8592; VOLVER</a>
-    <a class="btn btn-yellow" onclick="mostrar('vista16')">SIGUIENTE &#8594;</a>
+    <a class="btn btn-white" onclick="mostrar('vista15'); detenerSonido()">← VOLVER</a>
+    <a class="btn btn-green" onclick="mostrar('vista17'); detenerSonido()">🌅 LEVÁNTATE</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-  </nav>
 </div>
 
 <!-- VISTA 16 -->
-<div class="screen" id="vista16" style="background:#c0392b;">
+<div class="screen" id="vista17" style="background: #16a085;">
   <div class="img-panel">
-    <img src="assets/vista16.jpeg" alt="Vista 16" onerror="this.style.display='none'">
+    <img src="assets/ACEPTADOS.png" alt="Vista 16" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white" onclick="mostrar('vista15')">&#8592; VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista18')">💼 CHAMBA</a>
+    <a class="btn btn-blue"   onclick="mostrar('vista19')">🎒 ESCUELA</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">&#127968; Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">&#9200; Despertar</a>
-    <a class="nav-btn nav-orange" onclick="mostrar('vista5')">&#127891; Ay la Uni!</a>
-    <img src="assets/vista5.jpeg" alt="Vista 5" onerror="this.style.display='none'">
-  </div>
-  <div class="choice-row">
-    <a class="btn btn-white" onclick="mostrar('vista3')">← VOLVER</a>
-  </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
-    <a class="nav-btn nav-green"  onclick="mostrar('vista3')">🌅 ¡Levántate!</a>
-  </nav>
 </div>
 
-<!-- VISTA 6 -->
-<div class="screen" id="vista6">
+<!-- VISTA 17 -->
+<div class="screen" id="vista18" style="background: #2980b9;">
   <div class="img-panel">
-    <img src="assets/vista6.jpeg" alt="Vista 6" onerror="this.style.display='none'">
+    <img src="assets/chamba.png" alt="Vista 17" onerror="this.style.display='none'">
   </div>
   <div class="choice-row">
-    <a class="btn btn-white" onclick="mostrar('vista4')">← VOLVER</a>
+    <a class="btn btn-white"  onclick="mostrar('vista17')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista20', 'vista18')">SIGUIENTE →</a>
   </div>
-  <nav class="nav-menu">
-    <span class="nav-label">IR A</span>
-    <a class="nav-btn nav-yellow" onclick="mostrar('vista1')">🏠 Inicio</a>
-    <a class="nav-btn nav-cyan"   onclick="mostrar('vista2')">⏰ Despertar</a>
-    <a class="nav-btn nav-purple" onclick="mostrar('vista4')">😴 Ignorar</a>
+</div>
 
-  </nav>
+<!-- VISTA 18 -->
+<div class="screen" id="vista19" style="background: #8e44ad;">
+  <div class="img-panel">
+    <img src="assets/CALIFICACIONACEPTADO.png" alt="Vista 18" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista17')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista20', 'vista19')">SIGUIENTE →</a>
+  </div>
+</div>
+
+<!-- VISTA 19 -->
+<div class="screen" id="vista20" style="background: #f39c12;">
+  <div class="img-panel">
+    <img src="assets/FINAL.jpg" alt="Vista 19" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white" onclick="volverAtras20()">← VOLVER</a>
+    <a class="btn btn-red"   onclick="mostrar('vista21')">SIGUIENTE →</a>
+  </div>
+</div>
+
+<!-- VISTA 20 -->
+<div class="screen" id="vista21" style="background: #2c3e50;">
+  <div class="img-panel">
+    <img src="assets/FINAL2.jpg" alt="Vista 20" onerror="this.style.display='none'">
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="mostrar('vista20')">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista1')">🏠 INICIO</a>
+  </div>
+</div>
+
+<!-- VISTA 22 — HISTORIA -->
+<div class="screen" id="vista22" style="background: #1a1a2e;">
+  <div class="story-box">
+    <p>Juan tiene 20 años y la sensación de que el reloj de arena de su vida se está agotando antes de tiempo. Atrapado en la transición entre la universidad y la vida adulta, se enfrenta a un laberinto de decisiones cotidianas: levantarse a enfrentar el mundo o refugiarse en el sueño; priorizar las calificaciones académicas o buscar la estabilidad económica; perseguir el éxito profesional o cuidar su salud mental.</p>
+    <p>A través de un árbol de decisiones, acompañamos a Juan en un día crítico donde la presión social y la incertidumbre financiera amenazan con desbordarlo. Sin embargo, tras el caos de las elecciones y la ansiedad por el futuro, Juan llegará a una revelación fundamental: la vida no es una competencia contra los demás, sino un proceso personal. Al final, descubrirá que, a pesar de las dudas, él va a su propio tiempo y todo está bien.</p>
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="volverDesdeEspecial()">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista1')">🏠 INICIO</a>
+  </div>
+</div>
+
+<!-- VISTA 23 — DESARROLLADORES -->
+<div class="screen" id="vista23" style="background: #0d0d0d;">
+  <div class="devs-box">
+    <div class="devs-title">👥 Desarrolladores</div>
+    <ul class="devs-list">
+      <li>Jorge Hiram Zamora Arias</li>
+      <li>Jesús Flores Carbajal</li>
+      <li>Blanca Nava González</li>
+    </ul>
+  </div>
+  <div class="choice-row">
+    <a class="btn btn-white"  onclick="volverDesdeEspecial()">← VOLVER</a>
+    <a class="btn btn-yellow" onclick="mostrar('vista1')">🏠 INICIO</a>
+  </div>
 </div>
 
 <script>
-  var anteriorVista7 = 'vista5';
+  var anteriorVista7   = 'vista5';
+  var anteriorVista20  = 'vista18';
+  var vistaAnterior    = 'vista1';
+
+  var audioSonido = new Audio('assets/morning.mpeg');
+  var videoFinal  = document.getElementById('videoFinal');
+
+  function tocarSonido() {
+    audioSonido.currentTime = 0;
+    audioSonido.play();
+    videoFinal.currentTime = 0;
+    videoFinal.play();
+  }
+
+  function detenerSonido() {
+    audioSonido.pause();
+    audioSonido.currentTime = 0;
+    videoFinal.pause();
+    videoFinal.currentTime = 0;
+  }
 
   function mostrar(id, origen) {
-    if (id === 'vista7' && origen) {
-      anteriorVista7 = origen;
+    if (id === 'vista7'  && origen) anteriorVista7  = origen;
+    if (id === 'vista20' && origen) anteriorVista20 = origen;
+
+    // Guardar vista anterior antes de ir a historia/devs
+    var actual = document.querySelector('.screen.active');
+    if (actual && id !== actual.id) {
+      if (id === 'vista22' || id === 'vista23') {
+        vistaAnterior = actual.id;
+      }
     }
-    document.querySelectorAll('.screen').forEach(function(s) {
-      s.classList.remove('active');
-    });
+
+    if (id === 'vista16') { tocarSonido(); } else { detenerSonido(); }
+
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
   }
 
-  function volverAtras() {
-    mostrar(anteriorVista7);
-  }
+  function volverAtras()       { mostrar(anteriorVista7); }
+  function volverAtras20()     { mostrar(anteriorVista20); }
+  function volverDesdeEspecial() { mostrar(vistaAnterior); }
 </script>
 </body>
-
-</html>
-
 </html>
