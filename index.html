@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,7 +23,6 @@
 
     html, body { width: 100%; height: 100%; overflow: hidden; -webkit-text-size-adjust: 100%; }
 
-    /* ── TOP NAV ── */
     .top-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       background: var(--black); border-bottom: 4px solid var(--yellow);
@@ -64,7 +62,6 @@
     .tnav-dark   { background: #2c3e50; color: var(--white); }
     .tnav-teal   { background: #16a085; color: var(--white); }
 
-    /* ── SCREENS ── */
     .screen {
       position: fixed; inset: 0; padding-top: var(--nav-h); z-index: 1;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -116,7 +113,6 @@
       to   { transform: rotate(2deg) scale(1.04); }
     }
 
-    /* ── FLOATING BUTTONS ── */
     .float-btns {
       position: fixed;
       bottom: clamp(0.8rem, 3vw, 1.4rem);
@@ -147,7 +143,6 @@
     .float-historia    { background: var(--yellow); color: var(--black); }
     .float-devs        { background: #2c3e50;       color: var(--white); }
 
-    /* ── STORY BOX (vista 22) ── */
     .story-box {
       width: min(820px, 94vw); background: var(--white);
       border: 4px solid var(--black); box-shadow: 7px 7px 0 var(--black);
@@ -161,7 +156,6 @@
     }
     .story-box p + p { margin-top: 1rem; }
 
-    /* ── DEVS BOX (vista 23) ── */
     .devs-box {
       width: min(560px, 92vw); background: var(--white);
       border: 5px solid var(--black); box-shadow: 8px 8px 0 var(--black);
@@ -207,7 +201,6 @@
 </head>
 <body>
 
-<!-- ══════════ TOP NAV ══════════ -->
 <nav class="top-nav">
   <span class="top-nav-label">IR A</span>
   <a class="tnav-btn tnav-yellow" onclick="mostrar('vista1'); detenerSonido()">1</a>
@@ -232,7 +225,6 @@
   <a class="tnav-btn tnav-dark"   onclick="mostrar('vista21'); detenerSonido()">20</a>
 </nav>
 
-<!-- ══════════ FLOATING BUTTONS ══════════ -->
 <div class="float-btns">
   <a class="float-btn float-historia" onclick="mostrar('vista22'); detenerSonido()">📖 HISTORIA</a>
   <a class="float-btn float-devs"     onclick="mostrar('vista23'); detenerSonido()">👥 DESARROLLADORES</a>
@@ -293,6 +285,9 @@
 <div class="screen" id="vista6" style="background: #e8182e;">
   <div class="img-panel">
     <img src="assets/hambre.jpg" alt="Quedarse" onerror="this.style.display='none'">
+  </div>
+  <div class="uni-title" style="color: var(--white); text-align:center; max-width: min(700px, 90vw); line-height:1.2;">
+    Ay pero necesito presentar el examen
   </div>
   <div class="choice-row">
     <a class="btn btn-white"  onclick="mostrar('vista5')">← VOLVER</a>
@@ -515,7 +510,6 @@
     if (id === 'vista7'  && origen) anteriorVista7  = origen;
     if (id === 'vista20' && origen) anteriorVista20 = origen;
 
-    // Guardar vista anterior antes de ir a historia/devs
     var actual = document.querySelector('.screen.active');
     if (actual && id !== actual.id) {
       if (id === 'vista22' || id === 'vista23') {
@@ -529,8 +523,8 @@
     document.getElementById(id).classList.add('active');
   }
 
-  function volverAtras()       { mostrar(anteriorVista7); }
-  function volverAtras20()     { mostrar(anteriorVista20); }
+  function volverAtras()         { mostrar(anteriorVista7); }
+  function volverAtras20()       { mostrar(anteriorVista20); }
   function volverDesdeEspecial() { mostrar(vistaAnterior); }
 </script>
 </body>
